@@ -1,0 +1,31 @@
+declare class IdleTracker {
+    callback: ({ idle, event, }: {
+        idle: boolean;
+        event?: Event | undefined;
+    }) => void;
+    events: Array<Event['type']>;
+    listeners: Array<Event['type']>;
+    throttleTime: number;
+    timeout: number;
+    timer: ReturnType<typeof setTimeout> | null;
+    state: {
+        idle: boolean;
+        lastActive: number;
+    };
+    constructor({ timeout, onIdleCallback, events, throttle, }: {
+        timeout?: number | undefined;
+        onIdleCallback?: (() => undefined) | undefined;
+        events?: string[] | undefined;
+        throttle?: number | undefined;
+    });
+    start: ({ onIdleCallback, }?: {
+        onIdleCallback?: VoidFunction | undefined;
+    }) => void;
+    startTimer: () => void;
+    handleEvent: (e: Event) => void;
+    resetTimer: (e?: Event | undefined) => void;
+    isIdle: () => boolean;
+    clearTimer: () => void;
+    end: () => void;
+}
+export default IdleTracker;
